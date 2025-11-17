@@ -17,16 +17,14 @@
       />
       
       <FormInput 
-        v-model.number="formData.duration"
-        label="Duration (in days)"
-        type="number"
-        placeholder="7"
-        :min="1"
+        v-model.number="formData.date"
+        label="Pickup Date"
+        type="date"
       />
       
       <FormInput 
         v-model="formData.date"
-        label="Select date"
+        label="Return date"
         type="date"
       />
 
@@ -57,8 +55,6 @@ const formData = reactive({
 const deviceTypes = [
   { value: 'laptop', label: 'Laptop' },
   { value: 'camera', label: 'Camera' },
-  { value: 'phone', label: 'Phone' },
-  { value: 'headphones', label: 'Headphones' },
   { value: 'tablet', label: 'Tablet' }
 ]
 

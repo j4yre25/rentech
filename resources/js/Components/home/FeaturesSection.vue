@@ -21,17 +21,17 @@ const features = [
   {
     icon: '📦',
     title: 'Availability',
-    description: "Countless tech from the world's leading brands and products for everyone"
+    description: "Choose from a wide range of gadgets, available for rent and ready for instant rental."
   },
   {
     icon: '💻',
     title: 'Comfort',
-    description: 'Experience our fast rental process'
+    description: 'Convenient and fast rennnting process'
   },
   {
     icon: '💰',
     title: 'Savings',
-    description: 'Enjoy more features from the device without having to pay for it entirely'
+    description: 'Enjoy flexible rental plans that fit your budget. No hidden fees, No hassle'
   }
 ]
 </script>
