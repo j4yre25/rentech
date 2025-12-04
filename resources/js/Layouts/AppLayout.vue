@@ -1,145 +1,304 @@
 <template>
-    <div class="min-h-screen bg-gray-50">
-        <!-- Navigation -->
-        <nav class="bg-white shadow-sm sticky top-0 z-50">
-            <div class="container mx-auto px-4">
-                <div class="flex justify-between items-center h-16">
-                    <!-- Logo -->
-                    <Link :href="route('home')" class="flex items-center gap-2">
-                        <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
-                            <span class="text-gray-900 font-bold text-xl">R</span>
-                        </div>
-                        <span class="text-2xl font-bold text-gray-900">RenTech</span>
-                    </Link>
-                    
-                    <!-- Desktop Navigation -->
-                    <div class="hidden md:flex items-center gap-8">
-                        <Link 
-                            :href="route('home')" 
-                            class="text-gray-700 hover:text-yellow-600 font-medium transition"
-                        >
-                            Home
-                        </Link>
-                        <Link 
-                            :href="route('products.index')" 
-                            class="text-gray-700 hover:text-yellow-600 font-medium transition"
-                        >
-                            Browse
-                        </Link>
-                        <a href="#how-it-works" class="text-gray-700 hover:text-yellow-600 font-medium transition">
-                            How it Works
-                        </a>
-                        <a href="#contact" class="text-gray-700 hover:text-yellow-600 font-medium transition">
-                            Contact
-                        </a>
-                    </div>
-                    
-                    <!-- Auth Buttons -->
-                    <div class="hidden md:flex items-center gap-4">
-                        <a href="#" class="text-gray-700 hover:text-yellow-600 font-medium transition">
-                            Login
-                        </a>
-                        <a href="#" class="bg-yellow-400 text-gray-900 px-6 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition">
-                            Sign Up
-                        </a>
-                    </div>
-                    
-                    <!-- Mobile Menu Button -->
-                    <button 
-                        @click="mobileMenuOpen = !mobileMenuOpen"
-                        class="md:hidden text-gray-700 hover:text-yellow-600"
-                    >
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path 
-                                stroke-linecap="round" 
-                                stroke-linejoin="round" 
-                                stroke-width="2" 
-                                :d="mobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'"
-                            />
-                        </svg>
-                    </button>
-                </div>
-                
-                <!-- Mobile Menu -->
-                <div v-if="mobileMenuOpen" class="md:hidden border-t border-gray-100 py-4">
-                    <div class="flex flex-col space-y-3">
-                        <Link :href="route('home')" class="text-gray-700 hover:text-yellow-600 font-medium">
-                            Home
-                        </Link>
-                        <Link :href="route('products.index')" class="text-gray-700 hover:text-yellow-600 font-medium">
-                            Browse
-                        </Link>
-                        <a href="#how-it-works" class="text-gray-700 hover:text-yellow-600 font-medium">
-                            How it Works
-                        </a>
-                        <a href="#contact" class="text-gray-700 hover:text-yellow-600 font-medium">
-                            Contact
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+    <div>
+        <Head :title="title" />
 
-        <!-- Main Content -->
-        <main>
-            <slot />
-        </main>
+        <Banner />
 
-        <!-- Footer -->
-        <footer class="bg-gray-900 text-white py-12 mt-20">
-            <div class="container mx-auto px-4">
-                <div class="grid md:grid-cols-4 gap-8">
-                    <!-- Brand -->
-                    <div>
-                        <div class="flex items-center gap-2 mb-4">
-                            <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
-                                <span class="text-gray-900 font-bold text-xl">R</span>
+        <div class="min-h-screen bg-gray-100 flex">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white border-r border-gray-200">
+                <div class="p-4">
+                         <!-- Logo -->
+                                <div class="shrink-0 flex items-center">
+                                    <Link :href="route('dashboard')">
+                                        <ApplicationMark class="block h-9 w-auto" />
+                                        
+                                    </Link>
+                                    <h1>RenTech</h1>
+                                    
+                                </div>
+                    <ul class="mt-4 space-y-2">
+                        <li>
+                            <Link :href="route('dashboard')" class="block px-4 py-2 rounded hover:bg-gray-100" :class="{'bg-gray-100': route().current('dashboard')}">
+                                Dashboard
+                            </Link>
+                        </li>
+                        <li>
+                            <Link :href="route('orders.index')" class="block px-4 py-2 rounded hover:bg-gray-100" :class="{'bg-gray-100': route().current('orders.index')}">
+                                Orders
+                            </Link>
+                        </li>
+                        <li>
+                            <Link :href="route('products.index')" class="block px-4 py-2 rounded hover:bg-gray-100" :class="{'bg-gray-100': route().current('products.index')}">
+                                Products
+                            </Link>
+                        </li>
+                        <li>
+                            <Link :href="route('dashboard')" class="block px-4 py-2 rounded hover:bg-gray-100" :class="{'bg-gray-100': route().current('dashboard')}">
+                                Categories
+                            </Link>
+                        </li>
+
+                           <li>
+                            <Link href="" class="block px-4 py-2 rounded hover:bg-gray-100">
+                                Customers
+                            </Link>
+                        </li>
+                        <li>
+                            <Link :href="route('profile.show')" class="block px-4 py-2 rounded hover:bg-gray-100" :class="{'bg-gray-100': route().current('profile.show')}">
+                                Reports
+                            </Link>
+                        </li>
+                     
+                    </ul>
+                </div>
+            </aside>
+
+            <div class="flex-1">
+                <nav class="bg-white border-b border-gray-100">
+                    <!-- Primary Navigation Menu -->
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex justify-between h-16">
+                            <div class="flex">
+                           
+
+                                <!-- Navigation Links -->
+                             
+                            </div>
+
+                            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                                <div class="ms-3 relative">
+                                    <!-- Teams Dropdown -->
+                                    <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
+                                        <template #trigger>
+                                            <span class="inline-flex rounded-md">
+                                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                                    {{ $page.props.auth.user.current_team.name }}
+
+                                                    <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                                                    </svg>
+                                                </button>
+                                            </span>
+                                        </template>
+
+                                        <template #content>
+                                            <div class="w-60">
+                                                <!-- Team Management -->
+                                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                                    Manage Team
+                                                </div>
+
+                                                <!-- Team Settings -->
+                                                <DropdownLink :href="route('teams.show', $page.props.auth.user.current_team)">
+                                                    Team Settings
+                                                </DropdownLink>
+
+                                                <DropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')">
+                                                    Create New Team
+                                                </DropdownLink>
+
+                                                <!-- Team Switcher -->
+                                                <template v-if="$page.props.auth.user.all_teams.length > 1">
+                                                    <div class="border-t border-gray-200" />
+
+                                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                                        Switch Teams
+                                                    </div>
+
+                                                    <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
+                                                        <form @submit.prevent="switchToTeam(team)">
+                                                            <DropdownLink as="button">
+                                                                <div class="flex items-center">
+                                                                    <svg v-if="team.id == $page.props.auth.user.current_team_id" class="me-2 size-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                    </svg>
+
+                                                                    <div>{{ team.name }}</div>
+                                                                </div>
+                                                            </DropdownLink>
+                                                        </form>
+                                                    </template>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </Dropdown>
+                                </div>
+
+                                <!-- Settings Dropdown -->
+                                <div class="ms-3 relative">
+                                    <Dropdown align="right" width="48">
+                                        <template #trigger>
+                                            <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                                <img class="size-8 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+                                            </button>
+
+                                            <span v-else class="inline-flex rounded-md">
+                                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                                    {{ $page.props.auth.user.name }}
+
+                                                    <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                    </svg>
+                                                </button>
+                                            </span>
+                                        </template>
+
+                                        <template #content>
+                                            <!-- Account Management -->
+                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                                Manage Account
+                                            </div>
+
+                                            <DropdownLink :href="route('profile.show')">
+                                                Profile
+                                            </DropdownLink>
+
+                                            <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
+                                                API Tokens
+                                            </DropdownLink>
+
+                                            <div class="border-t border-gray-200" />
+
+                                            <!-- Authentication -->
+                                            <form @submit.prevent="logout">
+                                                <DropdownLink as="button">
+                                                    Log Out
+                                                </DropdownLink>
+                                            </form>
+                                        </template>
+                                    </Dropdown>
+                                </div>
+                            </div>
+
+                            <!-- Hamburger -->
+                            <div class="-me-2 flex items-center sm:hidden">
+                                <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" @click="showingNavigationDropdown = ! showingNavigationDropdown">
+                                    <svg
+                                        class="size-6"
+                                        stroke="currentColor"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            :class="{'hidden': showingNavigationDropdown, 'inline-flex': ! showingNavigationDropdown }"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M4 6h16M4 12h16M4 18h16"
+                                        />
+                                        <path
+                                            :class="{'hidden': ! showingNavigationDropdown, 'inline-flex': showingNavigationDropdown }"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
+                                    </svg>
+                                </button>
                             </div>
                             <span class="text-2xl font-bold">RenTech</span>
                         </div>
-                        <p class="text-gray-400 mb-4">
-                            Rent gadgets and stay up-to-date with cutting-edge technology
-                        </p>
                     </div>
 
-                    <!-- Company -->
-                    <div>
-                        <h4 class="font-bold mb-4 text-lg">Company</h4>
-                        <ul class="space-y-2 text-gray-400">
-                            <li><a href="#" class="hover:text-white transition">About Us</a></li>
-                            <li><a href="#" class="hover:text-white transition">How it Works</a></li>
-                            <li><a href="#" class="hover:text-white transition">Careers</a></li>
-                            <li><a href="#" class="hover:text-white transition">Blog</a></li>
-                        </ul>
-                    </div>
+                    <!-- Responsive Navigation Menu -->
+                    <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
+                        <div class="pt-2 pb-3 space-y-1">
+                            <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                Dashboard
+                            </ResponsiveNavLink>
+                        </div>
 
-                    <!-- Support -->
-                    <div>
-                        <h4 class="font-bold mb-4 text-lg">Support</h4>
-                        <ul class="space-y-2 text-gray-400">
-                            <li><a href="#" class="hover:text-white transition">Help Center</a></li>
-                            <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
-                            <li><a href="#" class="hover:text-white transition">FAQ</a></li>
-                            <li><a href="#" class="hover:text-white transition">Shipping Info</a></li>
-                        </ul>
-                    </div>
+                        <!-- Responsive Settings Options -->
+                        <div class="pt-4 pb-1 border-t border-gray-200">
+                            <div class="flex items-center px-4">
+                                <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 me-3">
+                                    <img class="size-10 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+                                </div>
 
-                    <!-- Legal -->
-                    <div>
-                        <h4 class="font-bold mb-4 text-lg">Legal</h4>
-                        <ul class="space-y-2 text-gray-400">
-                            <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
-                            <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
-                            <li><a href="#" class="hover:text-white transition">Rental Agreement</a></li>
-                        </ul>
-                    </div>
-                </div>
+                                <div>
+                                    <div class="font-medium text-base text-gray-800">
+                                        {{ $page.props.auth.user.name }}
+                                    </div>
+                                    <div class="font-medium text-sm text-gray-500">
+                                        {{ $page.props.auth.user.email }}
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                    <p>&copy; {{ new Date().getFullYear() }} RenTech. All rights reserved.</p>
-                </div>
+                            <div class="mt-3 space-y-1">
+                                <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
+                                    Profile
+                                </ResponsiveNavLink>
+
+                                <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')" :active="route().current('api-tokens.index')">
+                                    API Tokens
+                                </ResponsiveNavLink>
+
+                                <!-- Authentication -->
+                                <form method="POST" @submit.prevent="logout">
+                                    <ResponsiveNavLink as="button">
+                                        Log Out
+                                    </ResponsiveNavLink>
+                                </form>
+
+                                <!-- Team Management -->
+                                <template v-if="$page.props.jetstream.hasTeamFeatures">
+                                    <div class="border-t border-gray-200" />
+
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        Manage Team
+                                    </div>
+
+                                    <!-- Team Settings -->
+                                    <ResponsiveNavLink :href="route('teams.show', $page.props.auth.user.current_team)" :active="route().current('teams.show')">
+                                        Team Settings
+                                    </ResponsiveNavLink>
+
+                                    <ResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')" :active="route().current('teams.create')">
+                                        Create New Team
+                                    </ResponsiveNavLink>
+
+                                    <!-- Team Switcher -->
+                                    <template v-if="$page.props.auth.user.all_teams.length > 1">
+                                        <div class="border-t border-gray-200" />
+
+                                        <div class="block px-4 py-2 text-xs text-gray-400">
+                                            Switch Teams
+                                        </div>
+
+                                        <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
+                                            <form @submit.prevent="switchToTeam(team)">
+                                                <ResponsiveNavLink as="button">
+                                                    <div class="flex items-center">
+                                                        <svg v-if="team.id == $page.props.auth.user.current_team_id" class="me-2 size-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                        <div>{{ team.name }}</div>
+                                                    </div>
+                                                </ResponsiveNavLink>
+                                            </form>
+                                        </template>
+                                    </template>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Page Heading -->
+                <header v-if="$slots.header" class="bg-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <slot name="header" />
+                    </div>
+                </header>
+
+                <!-- Page Content -->
+                <main>
+                    <slot />
+                </main>
             </div>
-        </footer>
+        </div>
     </div>
 </template>
 
