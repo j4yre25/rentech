@@ -15,12 +15,16 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+            
         ]);
 
         $middleware->web(append: [
             HandleInertiaRequests::class,
         ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
+
+    
