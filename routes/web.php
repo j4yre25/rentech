@@ -10,8 +10,15 @@ use App\Http\Controllers\CategoryController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
+// Public product details page (Inertia -> ViewDetailsGadget)
+Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadgets.show');
 
-// Admins
+
+// Public product details page (Inertia -> ViewDetailsGadget)
+Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadgets.show');
+
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -31,6 +38,19 @@ Route::middleware([
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
 });
+
+Route::get('/viewdetails', function () {
+    return Inertia::render('Pages/ViewDetailsGadget'); // or return view('auth.login');
+})->name('view');
+
+
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login'); 
+})->name('login');
+
+Route::get('/register', function () {
+    return Inertia::render('Auth/Register'); 
+})->name('register');
 
 Route::get('/test', function () {
     return Inertia::render('TestComponent');

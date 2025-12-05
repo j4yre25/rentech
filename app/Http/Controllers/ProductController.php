@@ -71,10 +71,24 @@ class ProductController extends Controller
 
     public function create()
     {
-        $categories = Category::all()->toArray(); // Convert to plain array
+         $categories = Category::all()->toArray(); // Convert to plain array
 
         return Inertia::render('Admin/CreateProducts', [
             'categories' => $categories,
+        ]);
+    }
+
+    public function view(Product $product)
+    {
+        return Inertia::render('Pages/ViewDetailsGadget', [
+            'product' => $product,
+        ]);
+    }
+
+    public function view(Product $product)
+    {
+        return Inertia::render('Pages/ViewDetailsGadget', [
+            'product' => $product,
         ]);
     }
 }
