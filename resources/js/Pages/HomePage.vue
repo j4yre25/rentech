@@ -1,7 +1,31 @@
+<script setup>
+import { ref } from 'vue';
+import { Head, Link, router } from '@inertiajs/vue3';
+import LandingAppLayout from '@/Components/layout/LandingAppLayout.vue';
+
+defineProps({
+    products: {
+        type: Array,
+        default: () => []
+    }
+});
+
+const searchForm = ref({
+    category: '',
+    duration: '',
+    start_date: '',
+    end_date: ''
+});
+
+const handleSearch = () => {
+    router.get(route('products.index'), searchForm.value);
+};
+</script>
+
 <template>
     <Head title="Home - Rent Premium Gadgets" />
     
-    <AppLayout>
+    <LandingAppLayout>
         <!-- Hero Section -->
         <section class="bg-gradient-to-br from-yellow-400 via-yellow-300 to-yellow-500 py-20">
             <div class="container mx-auto px-4">
@@ -195,29 +219,6 @@
                 </a>
             </div>
         </section>
-    </AppLayout>
+    </LandingAppLayout>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
-import AppLayout from '@/Layouts/AppLayout.vue';
-
-defineProps({
-    products: {
-        type: Array,
-        default: () => []
-    }
-});
-
-const searchForm = ref({
-    category: '',
-    duration: '',
-    start_date: '',
-    end_date: ''
-});
-
-const handleSearch = () => {
-    router.get(route('products.index'), searchForm.value);
-};
-</script>
