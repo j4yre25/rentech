@@ -23,10 +23,31 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'role:rentor', // Restrict access to rentors only
 ])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    // Rentor Registration
+    Route::get('/register/rentor', function () {
+        return Inertia::render('Auth/RegisterRentor');
+    })->name('register.rentor');
+
+    Route::post('/register/rentor', [
+        App\Actions\Fortify\CreateNewRentor::class,
+        'create'
+    ])->name('register.rentor');
+
+    // Rentor Login
+    Route::get('/login/rentor', function () {
+        return Inertia::render('Auth/RentorLogin');
+    })->name('login.rentor');
+
+    Route::post('/login/rentor', [
+        App\Http\Controllers\AuthenticatedSessionController::class,
+        'store'
+    ])->name('login.rentor');
 
 
 
