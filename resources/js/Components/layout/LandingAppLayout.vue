@@ -36,28 +36,24 @@ const logout = () => {
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
-                        <div class="flex">
+                        <div class="flex"> -->
                             <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationMark class="block h-9 w-auto" />
-                                </Link>
-                            </div>
+                            
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <!-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                            </div>
+                            </div>>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
-                            <div class="ms-3 relative">
+                            <div class="ms-3 relative"> -->
                                 <!-- Teams Dropdown -->
-                                <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
+                                <!-- <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
                                             <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
@@ -71,23 +67,23 @@ const logout = () => {
                                     </template>
 
                                     <template #content>
-                                        <div class="w-60">
+                                        <div class="w-60"> -->
                                             <!-- Team Management -->
-                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                            <!-- <div class="block px-4 py-2 text-xs text-gray-400">
                                                 Manage Team
-                                            </div>
+                                            </div> -->
 
                                             <!-- Team Settings -->
-                                            <DropdownLink :href="route('teams.show', $page.props.auth.user.current_team)">
+                                            <!-- <DropdownLink :href="route('teams.show', $page.props.auth.user.current_team)">
                                                 Team Settings
                                             </DropdownLink>
 
                                             <DropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')">
                                                 Create New Team
-                                            </DropdownLink>
+                                            </DropdownLink> -->
 
                                             <!-- Team Switcher -->
-                                            <template v-if="$page.props.auth.user.all_teams.length > 1">
+                                            <!-- <template v-if="$page.props.auth.user.all_teams.length > 1">
                                                 <div class="border-t border-gray-200" />
 
                                                 <div class="block px-4 py-2 text-xs text-gray-400">
@@ -111,10 +107,10 @@ const logout = () => {
                                         </div>
                                     </template>
                                 </Dropdown>
-                            </div>
+                            </div> -->
 
                             <!-- Settings Dropdown -->
-                            <div class="ms-3 relative">
+                            <!-- <div class="ms-3 relative">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
@@ -132,9 +128,9 @@ const logout = () => {
                                         </span>
                                     </template>
 
-                                    <template #content>
+                                    <template #content> -->
                                         <!-- Account Management -->
-                                        <div class="block px-4 py-2 text-xs text-gray-400">
+                                        <!-- <div class="block px-4 py-2 text-xs text-gray-400">
                                             Manage Account
                                         </div>
 
@@ -146,10 +142,10 @@ const logout = () => {
                                             API Tokens
                                         </DropdownLink>
 
-                                        <div class="border-t border-gray-200" />
+                                        <div class="border-t border-gray-200" /> -->
 
                                         <!-- Authentication -->
-                                        <form @submit.prevent="logout">
+                                        <!-- <form @submit.prevent="logout">
                                             <DropdownLink as="button">
                                                 Log Out
                                             </DropdownLink>
@@ -157,10 +153,10 @@ const logout = () => {
                                     </template>
                                 </Dropdown>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
+                        <!-- <div class="-me-2 flex items-center sm:hidden">
                             <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" @click="showingNavigationDropdown = ! showingNavigationDropdown">
                                 <svg
                                     class="size-6"
@@ -186,7 +182,7 @@ const logout = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">

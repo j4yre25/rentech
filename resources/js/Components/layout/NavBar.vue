@@ -19,11 +19,10 @@
 
         <!-- Actions -->
         <div class="flex items-center gap-4">
-          <a href="#signin" class="text-gray-700 font-medium hover:text-yellow-500 transition">
-            Sign in
+          <a :href="route('login')"  class="text-gray-700 font-medium hover:text-yellow-500 transition">
+            Log In
           </a>
-          <a 
-            href="#signup" 
+          <a :href="route('register')"
             class="bg-gray-900 text-white px-6 py-2 rounded-full font-medium hover:bg-black transition"
           >
             Sign Up

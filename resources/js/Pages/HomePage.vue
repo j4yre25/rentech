@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import LandingAppLayout from '@/Components/layout/LandingAppLayout.vue';
+import NavBar from '@/Components/layout/NavBar.vue';
 
 defineProps({
     products: {
@@ -24,7 +25,7 @@ const handleSearch = () => {
 
 <template>
     <Head title="Home - Rent Premium Gadgets" />
-    
+    <NavBar />
     <LandingAppLayout>
         <!-- Hero Section -->
         <section class="bg-gradient-to-br from-yellow-400 via-yellow-300 to-yellow-500 py-20">
@@ -192,12 +193,19 @@ const handleSearch = () => {
                                     <p class="text-sm text-gray-600">per day</p>
                                 </div>
                             </div>
-                            
-                            <button 
-                                class="w-full bg-gray-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition shadow-md"
-                            >
-                                Rent Now
-                            </button>
+                            <div class="flex gap-3">
+                                <Link
+                                    :href="route('view')"
+                                    class="flex-1 bg-gray-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition shadow-md text-center"
+                                >
+                                    View details
+                                </Link>
+                                <button 
+                                    class="flex-1 bg-gray-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition shadow-md"
+                                >
+                                    Rent Now
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

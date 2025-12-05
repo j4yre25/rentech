@@ -62,4 +62,11 @@ class ProductController extends Controller
     {
         return Inertia::render('Admin/CreateProducts');
     }
+
+    public function view(Product $product)
+    {
+        return Inertia::render('Pages/ViewDetailsGadget', [
+            'product' => $product,
+        ]);
+    }
 }
