@@ -9,7 +9,10 @@ class RoleSeeder extends Seeder
 {
     public function run()
     {
+        // Create the 'rentor' role if it doesn't exist
+        if (!Role::where('name', 'rentor')->exists()) {
+            Role::create(['name' => 'rentor']);
+        }
         Role::create(['name' => 'renter', 'guard_name' => 'web']);
-        Role::create(['name' => 'rentor', 'guard_name' => 'web']);
     }
 }
