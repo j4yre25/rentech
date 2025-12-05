@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,7 +12,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = Product::query()
-            ->with('orders')
+            ->with(['orders', 'category']) // Include category relationship
             ->when($request->name, function ($query, $name) {
                 $query->where('name', 'like', "%$name%");
             })
@@ -32,9 +33,14 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
+            'category_id' => 'nullable|exists:categories,id',
+            'stock_quantity' => 'required|integer|min:0',
+            'color' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'images' => 'nullable|string',
         ]);
 
-        Product::create($validated);
+        Product::create($request->only(['name', 'price', 'category_id', 'stock_quantity', 'color', 'description', 'images']));
 
         return redirect()->back()->with('success', 'Product created successfully.');
     }
@@ -44,9 +50,14 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
+            'category_id' => 'nullable|exists:categories,id',
+            'stock_quantity' => 'required|integer|min:0',
+            'color' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'images' => 'nullable|string',
         ]);
 
-        $product->update($validated);
+        $product->update($request->only(['name', 'price', 'category_id', 'stock_quantity', 'color', 'description', 'images']));
 
         return redirect()->back()->with('success', 'Product updated successfully.');
     }
@@ -60,7 +71,18 @@ class ProductController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/CreateProducts');
+         $categories = Category::all()->toArray(); // Convert to plain array
+
+        return Inertia::render('Admin/CreateProducts', [
+            'categories' => $categories,
+        ]);
+    }
+
+    public function view(Product $product)
+    {
+        return Inertia::render('Pages/ViewDetailsGadget', [
+            'product' => $product,
+        ]);
     }
 
     public function view(Product $product)

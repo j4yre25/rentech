@@ -4,8 +4,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProductController;
-use App\Models\Product; 
-
+use App\Http\Controllers\CategoryController;
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -13,6 +12,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Public product details page (Inertia -> ViewDetailsGadget)
 Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadgets.show');
+
+
+// Public product details page (Inertia -> ViewDetailsGadget)
+Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadgets.show');
+
+
 
 Route::middleware([
     'auth:sanctum',
@@ -23,12 +28,15 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+
+
     Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
         ->group(function () {
             Route::get('/orders', [\App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
         });
 
     Route::resource('products', ProductController::class);
+    Route::resource('categories', CategoryController::class);
 });
 
 Route::get('/viewdetails', function () {

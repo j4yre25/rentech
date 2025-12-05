@@ -21,6 +21,7 @@ const searchForm = ref({
 const handleSearch = () => {
     router.get(route('products.index'), searchForm.value);
 };
+
 </script>
 
 <template>
