@@ -17,38 +17,29 @@ Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadg
 // Public product details page (Inertia -> ViewDetailsGadget)
 Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadgets.show');
 
+Route::get('/register/rentor', function () {
+    return Inertia::render('Auth/RegisterRentor');
+})->name('register.rentor');
+
+  Route::post('/register/rentor', [
+    App\Http\Controllers\RentorRegistrationController::class,
+    'store'
+])->name('register.rentor');
 
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified',
-    'role:rentor', // Restrict access to rentors only
+    'verified', 
 ])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
     // Rentor Registration
-    Route::get('/register/rentor', function () {
-        return Inertia::render('Auth/RegisterRentor');
-    })->name('register.rentor');
 
-    Route::post('/register/rentor', [
-        App\Actions\Fortify\CreateNewRentor::class,
-        'create'
-    ])->name('register.rentor');
-
-    // Rentor Login
-    Route::get('/login/rentor', function () {
-        return Inertia::render('Auth/RentorLogin');
-    })->name('login.rentor');
-
-    Route::post('/login/rentor', [
-        App\Http\Controllers\AuthenticatedSessionController::class,
-        'store'
-    ])->name('login.rentor');
-
+  
+   
 
 
     Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
@@ -66,11 +57,11 @@ Route::get('/viewdetails', function () {
 
 
 Route::get('/login', function () {
-    return Inertia::render('Auth/Login'); 
+    return Inertia::render('Auth/Login');
 })->name('login');
 
 Route::get('/register', function () {
-    return Inertia::render('Auth/Register'); 
+    return Inertia::render('Auth/Register');
 })->name('register');
 
 Route::get('/test', function () {

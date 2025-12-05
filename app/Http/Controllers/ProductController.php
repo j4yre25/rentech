@@ -85,10 +85,4 @@ class ProductController extends Controller
         ]);
     }
 
-    public function view(Product $product)
-    {
-        return Inertia::render('Pages/ViewDetailsGadget', [
-            'product' => $product,
-        ]);
-    }
 }

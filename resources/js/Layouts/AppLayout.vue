@@ -21,13 +21,16 @@ const page = usePage()
 const mobileMenuOpen = ref(false);
 const showingNavigationDropdown = ref(false);
 
-const user = page.props.auth?.user || {}; // Default to an empty object if user is null or undefined
 
 const isNotApproved = computed(() => user && (user.is_approved === false || user.is_approved === 0 || user.is_approved === '0' || user.is_approved === null));
 
 function logout() {
     Inertia.post(route('logout'));
+
 }
+
+const userRole = page.props.auth?.role;
+
 </script>
 
 
@@ -363,4 +366,3 @@ function logout() {
         </div>
     </div>
 </template>
-
