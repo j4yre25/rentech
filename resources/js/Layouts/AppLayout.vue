@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { Link, Head, usePage } from '@inertiajs/vue3';
+import { Inertia } from '@inertiajs/inertia';
 import Banner from '@/Components/Banner.vue';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -23,6 +24,10 @@ const showingNavigationDropdown = ref(false);
 const user = page.props.auth?.user || {}; // Default to an empty object if user is null or undefined
 
 const isNotApproved = computed(() => user && (user.is_approved === false || user.is_approved === 0 || user.is_approved === '0' || user.is_approved === null));
+
+function logout() {
+    Inertia.post(route('logout'));
+}
 </script>
 
 
@@ -66,8 +71,8 @@ const isNotApproved = computed(() => user && (user.is_approved === false || user
                             </Link>
                         </li>
                         <li>
-                            <Link :href="route('dashboard')" class="block px-4 py-2 rounded hover:bg-gray-100"
-                                :class="{ 'bg-gray-100': route().current('dashboard') }">
+                            <Link :href="route('categories.index')" class="block px-4 py-2 rounded hover:bg-gray-100"
+                                :class="{ 'bg-gray-100': route().current('categories.index') }">
                             Categories
                             </Link>
                         </li>
@@ -217,7 +222,7 @@ const isNotApproved = computed(() => user && (user.is_approved === false || user
 
                                             <!-- Authentication -->
                                             <form @submit.prevent="logout">
-                                                <DropdownLink as="button">
+                                                <DropdownLink as="button" @click="logout">
                                                     Log Out
                                                 </DropdownLink>
                                             </form>
@@ -243,7 +248,6 @@ const isNotApproved = computed(() => user && (user.is_approved === false || user
                                     </svg>
                                 </button>
                             </div>
-                            <span class="text-2xl font-bold">RenTech</span>
                         </div>
                     </div>
 

@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+            \Spatie\Permission\Middleware\RoleMiddleware::class, 
             
         ]);
 
@@ -27,4 +28,4 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })->create();
 
-    
+
