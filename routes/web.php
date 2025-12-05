@@ -17,17 +17,29 @@ Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadg
 // Public product details page (Inertia -> ViewDetailsGadget)
 Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadgets.show');
 
+Route::get('/register/rentor', function () {
+    return Inertia::render('Auth/RegisterRentor');
+})->name('register.rentor');
+
+  Route::post('/register/rentor', [
+    App\Http\Controllers\RentorRegistrationController::class,
+    'store'
+])->name('register.rentor');
 
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified',
+    'verified', 
 ])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    // Rentor Registration
+
+  
+   
 
 
     Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
@@ -45,11 +57,11 @@ Route::get('/viewdetails', function () {
 
 
 Route::get('/login', function () {
-    return Inertia::render('Auth/Login'); 
+    return Inertia::render('Auth/Login');
 })->name('login');
 
 Route::get('/register', function () {
-    return Inertia::render('Auth/Register'); 
+    return Inertia::render('Auth/Register');
 })->name('register');
 
 Route::get('/test', function () {
