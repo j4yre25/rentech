@@ -13,6 +13,6 @@ class RoleSeeder extends Seeder
         if (!Role::where('name', 'rentor')->exists()) {
             Role::create(['name' => 'rentor']);
         }
-        Role::create(['name' => 'renter', 'guard_name' => 'web']);
+        Role::create(['name' => 'rentee', 'guard_name' => 'web']);
     }
 }

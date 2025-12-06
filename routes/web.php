@@ -17,6 +17,20 @@ Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadg
 // Public product details page (Inertia -> ViewDetailsGadget)
 Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadgets.show');
 
+Route::get('/register/rentee', function () {
+    return Inertia::render('Auth/RegisterRentee'); 
+})->name('register.rentee');
+
+Route::post('/register/rentee', [
+    App\Http\Controllers\RenteeRegistrationController::class,
+    'store'
+])->name('register.rentee');
+Route::get('/email/confirm', function () {
+    return Inertia::render('Auth/VerifyEmail', [
+        'email' => request('email'),
+    ]);
+})->name('email.confirm.show');
+
 Route::get('/register/rentor', function () {
     return Inertia::render('Auth/RegisterRentor');
 })->name('register.rentor');
@@ -67,3 +81,9 @@ Route::get('/register', function () {
 Route::get('/test', function () {
     return Inertia::render('TestComponent');
 });
+
+Route::get('/email/confirm', function () {
+    return Inertia::render('Auth/ConfirmEmail', [
+        'email' => request('email'),
+    ]);
+})->name('email.confirm.show');

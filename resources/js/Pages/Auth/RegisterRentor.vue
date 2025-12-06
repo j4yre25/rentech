@@ -1,44 +1,57 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import Checkbox from '@/Components/Checkbox.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
 
 const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-    terms: false,
+  name: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
+  terms: false,
 });
 
 const submit = () => {
-    form.post(route('register.rentor'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
+  form.post(route('register.rentor'), {
+    onFinish: () => form.reset('password', 'password_confirmation'),
+  });
 };
 </script>
 
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
+
+h1 {
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+</style>
+
 <template>
-  <Head title="Create an Account" />
+  <Head title="Register as a Rentor" />
 
   <!-- Gradient background -->
   <div class="min-h-screen bg-gradient-to-b from-yellow-200 via-yellow-300 to-yellow-500 flex flex-col items-center justify-center px-4">
-    <!-- Optional logo (same as Login.vue) -->
-    <Link :href="route('home')" >
-      <img src="/images/logo.png" alt="RenTech Logo" class="w-32 h-auto cursor-pointer" />
+    <!-- Logo -->
+    <Link :href="route('home')">
+      <img src="/images/logo.png" alt="RenTech Logo" class="w-32 h-auto cursor-pointer mb-8" />
     </Link>
 
     <!-- Card -->
-    <div class="w-full max-w-md bg-white rounded-[4rem] shadow-xl p-8">
-      <div class="text-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-900 tracking-wide">Create an Account</h1>
-        <p class="text-sm text-gray-600 mt-2">
-          Have an Account?
+    <div class="w-full max-w-md bg-white rounded-[4rem] shadow-xl p-8 relative">
+      <!-- Back icon -->
+      <Link
+        :href="route('register')"
+        class="absolute left-6 top-6 text-gray-500 hover:text-gray-800 flex items-center gap-1 text-sm"
+      >
+        <span class="text-lg">&larr;</span>
+        <span>Back</span>
+      </Link>
+
+      <div class="text-center mb-6 mt-4">
+        <h1 class="text-2xl font-bold text-gray-900 tracking-wide">Register as a Rentor</h1>
+        <p class="text-sm text-gray-500 mt-1">
+          Rent your gadget for extra income.
+        </p>
+        <p class="text-xs text-gray-600 mt-3">
+          Already have an account?
           <Link :href="route('login')" class="text-blue-600 hover:underline">Sign In</Link>
         </p>
       </div>
@@ -104,8 +117,6 @@ const submit = () => {
           />
           <div v-if="form.errors.password_confirmation" class="mt-2 text-sm text-red-600">{{ form.errors.password_confirmation }}</div>
         </div>
-
-        
 
         <!-- Submit -->
         <button

@@ -4,7 +4,7 @@ import Logo from '@/Components/layout/Logo.vue'; // Import your logo component
 
 defineProps({
   canResetPassword: Boolean,
-  status: String,
+  status: String, // This will receive the "Email verified!" message
 });
 
 const form = useForm({
@@ -51,8 +51,14 @@ h1 {
         </p>
       </div>
 
-      <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-        {{ status }}
+      <!-- Success Message (add before the form) -->
+      <div v-if="status" class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p class="text-sm font-medium text-green-800">{{ status }}</p>
+        </div>
       </div>
 
       <form @submit.prevent="submit">
