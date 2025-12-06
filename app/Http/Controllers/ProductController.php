@@ -40,11 +40,20 @@ class ProductController extends Controller
             'images' => 'nullable|string',
         ]);
 
-        Product::create($request->only(['name', 'price', 'category_id', 'stock_quantity', 'color', 'description', 'images']));
+        Product::create($validated); // Use validated data
 
         return redirect()->back()->with('success', 'Product created successfully.');
     }
 
+    public function edit(Product $product)
+    {
+        $categories = Category::all(); // Retrieve all categories for the dropdown
+
+        return Inertia::render('Admin/EditProducts', [
+            'product' => $product,
+            'categories' => $categories,
+        ]);
+    }
     public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
@@ -71,7 +80,7 @@ class ProductController extends Controller
 
     public function create()
     {
-         $categories = Category::all()->toArray(); // Convert to plain array
+        $categories = Category::all()->toArray(); // Convert to plain array
 
         return Inertia::render('Admin/CreateProducts', [
             'categories' => $categories,
