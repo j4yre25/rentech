@@ -6,7 +6,8 @@ import { ref, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
 import LandingAppLayout from '@/Components/layout/LandingAppLayout.vue';
 import NavBar from '@/Components/layout/NavBar.vue';
-import VueApexCharts from 'vue3-apexcharts';import HomePage from '@/Pages/Customer/HomePage.vue';
+import VueApexCharts from 'vue3-apexcharts';
+import HomePage from '@/Pages/Customer/HomePage.vue';
 
 
 const page = usePage()
