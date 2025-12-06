@@ -14,25 +14,29 @@ const props = defineProps({
             { id: 5, name: 'Headphones' },
         ], // Default mock data if empty
     },
+    product: {
+        type: Object,
+        required: true,
+    },
 });
 
 const form = useForm({
-    name: '',
-    description: '',
-    category_id: '',
-    price: '',
-    discount_price: '',
-    is_taxable: false,
-    has_options: true, // Default true to show the section per image
-    images: [],
-    selected_categories: [],
-    tags: ['T-Shirt', 'Men Clothes', 'Summer Collection'], // Mock data from image
-    options: [
+    name: props.product.name || '',
+    description: props.product.description || '',
+    category_id: props.product.category_id || '',
+    price: props.product.price || '',
+    discount_price: props.product.discount_price || '',
+    is_taxable: props.product.is_taxable || false,
+    has_options: props.product.has_options || true, // Default true to show the section per image
+    images: props.product.images || [],
+    selected_categories: props.product.selected_categories || [],
+    tags: props.product.tags || [],
+    options: props.product.options || [
         { name: 'Color', values: ['White', 'Black'] }
     ],
     new_tag: '',
-    stock_quantity: '', // Added stock_quantity to form
-    color: '#000000', // Default color
+    stock_quantity: props.product.stock_quantity || '',
+    color: props.product.color || '#000000',
 });
 
 // Helper for Tag Input
@@ -64,9 +68,9 @@ const handleFileUpload = (event) => {
     }
 };
 
-const saveProduct = () => {
+const updateProduct = () => {
     console.log(form); // Debugging: Check the form data
-    form.post(route('products.store'), {
+    form.put(route('products.update', props.product.id), {
         onSuccess: () => {
             form.reset(); // Reset the form on success
         },
@@ -78,7 +82,7 @@ const saveProduct = () => {
 </script>
 
 <template>
-    <AppLayout title="Add Product">
+    <AppLayout title="Edit Product">
         <div class="min-h-screen bg-gray-50 p-8 font-sans">
             
             <div class="max-w-7xl mx-auto mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -87,13 +91,13 @@ const saveProduct = () => {
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                         Back
                     </Link>
-                    <h1 class="text-2xl font-bold text-gray-900">Add Product</h1>
+                    <h1 class="text-2xl font-bold text-gray-900">Edit Product</h1>
                 </div>
                 <div class="flex gap-3">
                     <button class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm">
                         Cancel
                     </button>
-                    <button @click="saveProduct" class="px-4 py-2 bg-yellow-400 border border-transparent rounded-md text-sm font-medium text-gray-900 hover:bg-yellow-500 shadow-sm">
+                    <button @click="updateProduct" class="px-4 py-2 bg-yellow-400 border border-transparent rounded-md text-sm font-medium text-gray-900 hover:bg-yellow-500 shadow-sm">
                         Save
                     </button>
                 </div>
@@ -178,7 +182,6 @@ const saveProduct = () => {
                             >
                         </div>
                     </div>
-                
                 </div>
 
                 <div class="space-y-6">
@@ -237,7 +240,6 @@ const saveProduct = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -245,7 +247,7 @@ const saveProduct = () => {
                  <button class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm">
                     Cancel
                 </button>
-                <button @click="saveProduct" class="px-4 py-2 bg-yellow-400 border border-transparent rounded-md text-sm font-medium text-gray-900 hover:bg-yellow-500 shadow-sm">
+                <button @click="updateProduct" class="px-4 py-2 bg-yellow-400 border border-transparent rounded-md text-sm font-medium text-gray-900 hover:bg-yellow-500 shadow-sm">
                     Save
                 </button>
             </div>
