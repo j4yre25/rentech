@@ -9,12 +9,12 @@ use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 use Spatie\Permission\Models\Role;
 
-class CreateNewUser implements CreatesNewUsers
+class CreateNewRentee implements CreatesNewUsers
 {
     use PasswordValidationRules;
 
     /**
-     * Validate and create a newly registered user.
+     * Validate and create a newly registered rentor.
      *
      * @param  array<string, string>  $input
      */
@@ -24,7 +24,6 @@ class CreateNewUser implements CreatesNewUsers
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
         $user = User::create([
@@ -34,6 +33,8 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
         $user->assignRole('rentee');
+        $user->role = 'rentee';
+        $user->save();
 
         return $user;
     }

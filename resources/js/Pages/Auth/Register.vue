@@ -1,19 +1,16 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
-const form = useForm({
-  name: '',
-  email: '',
-  password: '',
-  password_confirmation: '',
-  terms: false,
-});
+const selectedRole = ref('rentee'); // simple string is enough
 
-const submit = () => {
-  form.post(route('register'), {
-    onFinish: () => form.reset('password', 'password_confirmation'),
-  });
-};
+function continueToForm() {
+  if (selectedRole.value === 'rentor') {
+    router.get(route('register.rentor'));      // rentor form
+  } else {
+    router.get(route('register.rentee'));      // rentee form
+  }
+}
 </script>
 
 <style scoped>
@@ -28,13 +25,15 @@ h1 {
   <Head title="Create an Account" />
 
   <!-- Gradient background -->
-  <div class="min-h-screen bg-gradient-to-b from-yellow-200 via-yellow-300 to-yellow-500 flex flex-col items-center justify-center px-4">
-    <!-- Optional logo (same as Login.vue) -->
-    <Link :href="route('home')" >
+  <div
+    class="min-h-screen bg-gradient-to-b from-yellow-200 via-yellow-300 to-yellow-500 flex flex-col items-center justify-center px-4"
+  >
+    <!-- Logo -->
+    <Link :href="route('home')" class="mb-8">
       <img src="/images/logo.png" alt="RenTech Logo" class="w-32 h-auto cursor-pointer" />
     </Link>
 
-    <!-- Card -->
+    <!-- Role selection card -->
     <div class="w-full max-w-md bg-white rounded-[4rem] shadow-xl p-8">
       <div class="text-center mb-6">
         <h1 class="text-2xl font-bold text-gray-900 tracking-wide">Create an Account</h1>
@@ -44,79 +43,69 @@ h1 {
         </p>
       </div>
 
-      <form @submit.prevent="submit">
-        <!-- Name -->
-        <div class="mb-4">
-          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-          <input
-            id="name"
-            v-model="form.name"
-            type="text"
-            class="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-gray-900 focus:ring-gray-900"
-            placeholder="Enter Full Name"
-            required
-            autofocus
-            autocomplete="name"
-          />
-          <div v-if="form.errors.name" class="mt-2 text-sm text-red-600">{{ form.errors.name }}</div>
-        </div>
+      <p class="text-sm font-medium text-gray-700 mb-3">I want to register as:</p>
 
-        <!-- Email -->
-        <div class="mb-4">
-          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            id="email"
-            v-model="form.email"
-            type="email"
-            class="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-gray-900 focus:ring-gray-900"
-            placeholder="Enter Email Address"
-            required
-            autocomplete="username"
-          />
-          <div v-if="form.errors.email" class="mt-2 text-sm text-red-600">{{ form.errors.email }}</div>
-        </div>
-
-        <!-- Password -->
-        <div class="mb-4">
-          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-          <input
-            id="password"
-            v-model="form.password"
-            type="password"
-            class="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-gray-900 focus:ring-gray-900"
-            placeholder="Create Password"
-            required
-            autocomplete="new-password"
-          />
-          <div v-if="form.errors.password" class="mt-2 text-sm text-red-600">{{ form.errors.password }}</div>
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mb-6">
-          <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-          <input
-            id="password_confirmation"
-            v-model="form.password_confirmation"
-            type="password"
-            class="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-gray-900 focus:ring-gray-900"
-            placeholder="Confirm Password"
-            required
-            autocomplete="new-password"
-          />
-          <div v-if="form.errors.password_confirmation" class="mt-2 text-sm text-red-600">{{ form.errors.password_confirmation }}</div>
-        </div>
-
-        
-
-        <!-- Submit -->
+      <div class="space-y-3 mb-6">
+        <!-- Rentee option -->
         <button
-          type="submit"
-          class="w-full rounded-md bg-[#1F2A44] text-white py-2 font-semibold hover:bg-[#152037] transition disabled:opacity-50"
-          :disabled="form.processing"
+          type="button"
+          class="w-full border rounded-xl px-4 py-3 text-left flex items-center justify-between transition
+                 hover:border-gray-900"
+          :class="selectedRole === 'rentee' ? 'border-gray-900 bg-gray-50' : 'border-gray-300 bg-white'"
+          @click="selectedRole = 'rentee'"
         >
-          Create Account
+          <div>
+            <div class="font-semibold text-gray-900">Rentee</div>
+            <div class="text-xs text-gray-500">
+              I want to rent gadgets from others.
+            </div>
+          </div>
+          <span
+            class="ml-4 inline-flex h-5 w-5 rounded-full border flex items-center justify-center text-xs"
+            :class="
+              selectedRole === 'rentee'
+                ? 'border-gray-900 bg-gray-900 text-white'
+                : 'border-gray-300 bg-white text-transparent'
+            "
+          >
+            ●
+          </span>
         </button>
-      </form>
+
+        <!-- Rentor option -->
+        <button
+          type="button"
+          class="w-full border rounded-xl px-4 py-3 text-left flex items-center justify-between transition
+                 hover:border-gray-900"
+          :class="selectedRole === 'rentor' ? 'border-gray-900 bg-gray-50' : 'border-gray-300 bg-white'"
+          @click="selectedRole = 'rentor'"
+        >
+          <div>
+            <div class="font-semibold text-gray-900">Rentor</div>
+            <div class="text-xs text-gray-500">
+              I want to list my gadgets for rent.
+            </div>
+          </div>
+          <span
+            class="ml-4 inline-flex h-5 w-5 rounded-full border flex items-center justify-center text-xs"
+            :class="
+              selectedRole === 'rentor'
+                ? 'border-gray-900 bg-gray-900 text-white'
+                : 'border-gray-300 bg-white text-transparent'
+            "
+          >
+            ●
+          </span>
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="w-full rounded-md bg-[#1F2A44] text-white py-2 font-semibold hover:bg-[#152037] transition"
+        @click="continueToForm"
+      >
+        Continue
+      </button>
     </div>
   </div>
 </template>
