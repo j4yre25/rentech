@@ -1,65 +1,111 @@
 <template>
-  <footer id="contact" class="bg-white-900 text-white py-16 px-6">
+  <footer class="bg-white-900 text-black py-12 px-6">
     <div class="container mx-auto">
-      <div class="grid md:grid-cols-4 gap-12 mb-12">
-        <div>
-          <Logo class="mb-4" />
-          <p class="text-gray-400 mb-6">
-            Rent gadgets with ease and convenience. Connect with us for the latest technology at the best prices.
+      <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+        <!-- Brand Section -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-2">
+            <Link :href="route('home')">
+              <img src="/images/logo.png" alt="RenTech Logo" class="w-28 h-auto cursor-pointer hover:scale-105 transition-transform" />
+            </Link>
+          </div>
+          <p class="text-black-400 mb-6 leading-relaxed">
+            Rent gadgets with ease and convenience. Connect with verified renters and find the tools you need in just a few clicks.
           </p>
-          <div class="flex gap-4">
-            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-gray-900 transition">
-              f
+          <div class="flex gap-3">
+            <a href="#" class="w-9 h-9 bg-yellow-500 rounded-full flex items-center justify-center hover:bg-yellow-400 transition">
+              <span class="text-sm font-bold">f</span>
             </a>
-            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-gray-900 transition">
-              t
+            <a href="#" class="w-9 h-9 bg-yellow-500 rounded-full flex items-center justify-center hover:bg-yellow-400 transition">
+              <span class="text-sm font-bold">in</span>
             </a>
-            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-gray-900 transition">
-              in
+            <a href="#" class="w-9 h-9 bg-yellow-500 rounded-full flex items-center justify-center hover:bg-yellow-400 transition">
+              <span class="text-sm font-bold">tw</span>
             </a>
-            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-gray-900 transition">
-              y
+            <a href="#" class="w-9 h-9 bg-yellow-500 rounded-full flex items-center justify-center hover:bg-yellow-400 transition">
+              <span class="text-sm font-bold">yt</span>
             </a>
           </div>
         </div>
 
+        <!-- Address -->
         <div>
-          <h4 class="text-yellow-400 font-bold text-lg mb-4">Address</h4>
-          <p class="text-gray-400">
-            123 Tech Street<br>
-            Manila, Philippines<br>
-            contact@rentech.com
-          </p>
+          <div class="flex items-start gap-3 mb-4">
+            <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+              <span class="text-black-900 text-sm">📍</span>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-1">Address</h4>
+              <p class="text-black-400 text-sm">General Santos City, Philippines</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 mb-4">
+            <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+              <span class="text-black-900 text-sm">📧</span>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-1">Email</h4>
+              <p class="text-black-400 text-sm">rentechph@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+              <span class="text-black-900 text-sm">📞</span>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-1">Phone</h4>
+              <p class="text-black-400 text-sm">+63 912 345 6789</p>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <h4 class="text-yellow-400 font-bold text-lg mb-4">Useful Links</h4>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">About us</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">Contact</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">Blog</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">FAQ</a></li>
-          </ul>
-        </div>
+        <!-- Useful Links -->
+        <FooterColumn 
+          title="Useful links"
+          :links="[
+            { name: 'About us', href: '#about' },
+            { name: 'Contact us', href: '#contact' },
+            { name: 'Gallery', href: '#gallery' },
+            { name: 'Blog', href: '#blog' },
+            { name: 'F.A.Q', href: '#faq' }
+          ]"
+        />
 
-        <div>
-          <h4 class="text-yellow-400 font-bold text-lg mb-4">Products</h4>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">Laptop</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">Headphones</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">Cameras</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">Smartphones</a></li>
-          </ul>
-        </div>
+        <!-- Devices -->
+        <FooterColumn 
+          title="Devices"
+          :links="deviceLinks"
+        />
       </div>
 
-      <div class="border-t border-white-800 pt-8 text-center text-gray-400">
-        <p>&copy; 2025 RenTech. All rights reserved.</p>
+      <div class="border-t border-black-800 pt-6 text-center">
+        <p class="text-black-400 text-sm">
+          &copy; {{ currentYear }} RenTech Philippines. All rights reserved.
+        </p>
       </div>
     </div>
   </footer>
-</template> 
+</template>
 
 <script setup>
-import Logo from './Logo.vue'
+import { computed } from 'vue';
+import FooterColumn from './FooterColumn.vue';
+import { Link } from '@inertiajs/vue3';
+
+const currentYear = new Date().getFullYear();
+
+const deviceLinks = computed(() => [
+  { name: 'Laptops', href: route('gadgets.list') + '?category=laptops' },
+  { name: 'Speakers', href: route('gadgets.list') + '?category=speakers' },
+  { name: 'VR Headsets', href: route('gadgets.list') + '?category=vr' },
+  { name: 'Projectors', href: route('gadgets.list') + '?category=projectors' },
+  { name: 'Tablets', href: route('gadgets.list') + '?category=tablets' },
+  { name: 'Headphones', href: route('gadgets.list') + '?category=headphones' },
+  { name: 'Printers', href: route('gadgets.list') + '?category=printers' },
+  { name: 'Microphone', href: route('gadgets.list') + '?category=microphones' },
+  { name: 'Cameras', href: route('gadgets.list') + '?category=cameras' },
+  { name: 'Drones', href: route('gadgets.list') + '?category=drones' }
+]);
 </script>

@@ -5,18 +5,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ViewProductController;
+use App\Http\Controllers\RentsController;
 use App\Models\Rentee;
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
-
-// Public product details page (Inertia -> ViewDetailsGadget)
-Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadgets.show');
-
-
-// Public product details page (Inertia -> ViewDetailsGadget)
-Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadgets.show');
 
 Route::get('/register/rentee', function () {
     return Inertia::render('Auth/RegisterRentee');
@@ -26,11 +20,6 @@ Route::post('/register/rentee', [
     App\Http\Controllers\RenteeRegistrationController::class,
     'store'
 ])->name('register.rentee');
-Route::get('/email/confirm', function () {
-    return Inertia::render('Auth/VerifyEmail', [
-        'email' => request('email'),
-    ]);
-})->name('email.confirm.show');
 
 Route::get('/register/rentor', function () {
     return Inertia::render('Auth/RegisterRentor');
@@ -41,7 +30,6 @@ Route::post('/register/rentor', [
     'store'
 ])->name('register.rentor');
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -51,18 +39,22 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    // Rentor Registration
+// Rentee Routes
+Route::get('/gadgets', [ViewProductController::class, 'list'])->name('gadgets.list');
+Route::get('/gadgets/{product}', [ViewProductController::class, 'show'])->name('gadgets.show');
+Route::get('/gadgets/{product}/rent', [ViewProductController::class, 'rent'])->name('gadgets.rent');
+Route::post('/gadgets/{product}/rent', [RentsController::class, 'store'])->name('gadgets.rent.store');
 
-
-
-
+Route::get('/my-rents', [RentsController::class, 'index'])->name('rents.index');
+// End of Rentee Routes
 
     Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
         ->group(function () {
             Route::get('/orders', [\App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
         });
+        
     Route::get('/customers', function () {
-        $rentees = Rentee::paginate(10); // Fetch rentees with pagination
+        $rentees = Rentee::paginate(10);
         return Inertia::render('Admin/Customers', [
             'rentees' => $rentees,
         ]);
@@ -73,9 +65,8 @@ Route::middleware([
 });
 
 Route::get('/viewdetails', function () {
-    return Inertia::render('Pages/ViewDetailsGadget'); // or return view('auth.login');
+    return Inertia::render('Pages/ViewDetailsGadget');
 })->name('view');
-
 
 Route::get('/login', function () {
     return Inertia::render('Auth/Login');
@@ -90,7 +81,7 @@ Route::get('/test', function () {
 });
 
 Route::get('/email/confirm', function () {
-    return Inertia::render('Auth/ConfirmEmail', [
+    return Inertia::render('Auth/VerifyEmail', [
         'email' => request('email'),
     ]);
 })->name('email.confirm.show');
