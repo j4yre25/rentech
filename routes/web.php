@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ViewProductController;
 use App\Http\Controllers\RentsController;
 use App\Models\Rentee;
+use App\Http\Controllers\ReportsController;
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -60,8 +61,17 @@ Route::get('/my-rents', [RentsController::class, 'index'])->name('rents.index');
         ]);
     })->name('customers.index');
 
+    Route::get('/customers/{id}', function ($id) {
+        $customer = Rentee::findOrFail($id); // Fetch customer details
+        return Inertia::render('Admin/CustomerDetails', [
+            'customer' => $customer,
+        ]);
+    })->name('customers.details');
+
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
+    Route::post('/products/batch-destroy', [ProductController::class, 'destroy'])->name('products.batchDestroy');
+    Route::post('/categories/{category}/save-products', [CategoryController::class, 'saveProducts'])->name('categories.saveProducts');
 });
 
 Route::get('/viewdetails', function () {
@@ -85,3 +95,5 @@ Route::get('/email/confirm', function () {
         'email' => request('email'),
     ]);
 })->name('email.confirm.show');
+
+Route::get('/reports', [\App\Http\Controllers\ReportsController::class, 'index'])->name('reports.index');

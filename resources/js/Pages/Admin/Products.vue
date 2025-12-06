@@ -61,7 +61,25 @@ watch(search, debounce((value) => {
 
 // Placeholder actions
 const exportProducts = () => console.log('Exporting...');
-const deleteSelected = () => console.log('Deleting', selectedProducts.value);
+const deleteSelected = () => {
+    if (selectedProducts.value.length === 0) {
+        alert('No products selected.');
+        return;
+    }
+
+    if (confirm('Are you sure you want to delete the selected products?')) {
+        axios.post(route('products.batchDestroy'), {
+            products: selectedProducts.value,
+        })
+            .then(response => {
+                console.log(response.data.message);
+                location.reload(); // Reload the page to reflect changes
+            })
+            .catch(error => {
+                console.error('Error deleting products:', error.response.data);
+            });
+    }
+};
 </script>
 
 <template>
@@ -123,7 +141,7 @@ const deleteSelected = () => console.log('Deleting', selectedProducts.value);
                     </div>
 
                     <div class="flex items-center gap-2">
-                   
+
                         <button @click="deleteSelected"
                             class="p-2 text-gray-400 hover:text-red-600 border border-gray-200 rounded hover:bg-gray-50 transition-colors">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -166,7 +184,8 @@ const deleteSelected = () => console.log('Deleting', selectedProducts.value);
                                     <div class="flex items-center gap-4">
                                         <div
                                             class="h-10 w-10 flex-shrink-0 bg-gray-100 rounded-md border border-gray-200 overflow-hidden">
-                                            <img :src="product.image" :alt="product.name" class="h-full w-full object-cover">
+                                            <img :src="product.image" :alt="product.name"
+                                                class="h-full w-full object-cover">
                                         </div>
                                         <div>
                                             <div class="text-sm font-medium text-gray-900">{{ product.name }}</div>

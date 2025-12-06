@@ -43,7 +43,7 @@ class CategoryController extends Controller
     {
         $category = Category::with('products')->findOrFail($id);
         $products = Product::distinct()->get();
-        
+
         return Inertia::render('Admin/EditCategories', [
             'category' => $category,
             'products' => $products,
@@ -56,7 +56,11 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'nullable|image',
             'visible' => 'required|boolean',
+            'products' => 'array', // Ensure products is an array
         ]);
+
+        // Log the incoming request data for debugging
+        \Log::info('Update Category Request:', $request->all());
 
         $imagePath = $request->file('image')?->store('categories', 'public');
 
@@ -66,6 +70,10 @@ class CategoryController extends Controller
             'visible' => $request->visible,
         ]);
 
+        // Update the products relationship manually
+        Product::where('category_id', $category->id)->update(['category_id' => null]); // Detach all products
+        Product::whereIn('id', $request->products)->update(['category_id' => $category->id]); // Attach selected products
+
         return redirect()->route('categories.index');
     }
 
@@ -73,5 +81,19 @@ class CategoryController extends Controller
     {
         $category->delete();
         return redirect()->route('categories.index');
+    }
+
+
+    public function saveProducts(Request $request, Category $category)
+    {
+        $request->validate([
+            'products' => 'required|array',
+            'products.*' => 'exists:products,id', // Ensure each product ID exists
+        ]);
+
+        // Attach the selected products to the category
+        Product::whereIn('id', $request->products)->update(['category_id' => $category->id]);
+
+        return response()->json(['message' => 'Products added successfully.']);
     }
 }

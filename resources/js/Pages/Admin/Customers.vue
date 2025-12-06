@@ -131,7 +131,8 @@ const toggleAll = (e) => {
                             <tr 
                                 v-for="rentee in rentees.data" 
                                 :key="rentee.id" 
-                                class="hover:bg-gray-50 transition duration-150 ease-in-out group"
+                                class="hover:bg-gray-50 transition duration-150 cursor-pointer" 
+                                @click="router.get(`/customers/${rentee.id}`)"
                             >
                                 <td class="p-4">
                                     <input 

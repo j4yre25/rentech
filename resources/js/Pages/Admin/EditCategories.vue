@@ -42,9 +42,20 @@ function addProduct() {
 }
 
 function addSelectedProducts(selected) {
-    form.products.push(...selected.map(product => product.id));
-    showModal.value = false;
-    selectedProducts.value = [];
+    console.log('Selected products:', selected);
+
+    axios.post(route('categories.saveProducts', category.id), {
+        products: selected,
+    })
+    .then(response => {
+        console.log(response.data.message);
+        form.products.push(...selected.filter(productId => !form.products.includes(productId)));
+        showModal.value = false;
+        selectedProducts.value = [];
+    })
+    .catch(error => {
+        console.error('Error adding products:', error.response.data);
+    });
 }
 </script>
 

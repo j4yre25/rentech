@@ -71,13 +71,17 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product updated successfully.');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Request $request)
     {
-        $product->delete();
+        $request->validate([
+            'products' => 'required|array',
+            'products.*' => 'exists:products,id', // Ensure each product ID exists
+        ]);
 
-        return redirect()->back()->with('success', 'Product deleted successfully.');
+        Product::whereIn('id', $request->products)->delete();
+
+        return response()->json(['message' => 'Selected products deleted successfully.']);
     }
-
     public function create()
     {
         $categories = Category::all()->toArray(); // Convert to plain array
