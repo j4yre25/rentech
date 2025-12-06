@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watchEffect } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { router, useForm } from '@inertiajs/vue3';
 import NavBar from '@/Components/layout/NavBar.vue';
 import Footer from '@/Components/layout/Footer.vue';
 
@@ -66,6 +66,22 @@ const accessories = computed(() => {
 function formatPrice(value) {
   return Number(value ?? 0).toLocaleString('en-PH', { maximumFractionDigits: 0 });
 }
+
+const defaultStart = new Date();
+const defaultEnd = new Date();
+defaultEnd.setDate(defaultEnd.getDate() + 1);
+
+const rentForm = useForm({
+  start_date: defaultStart.toISOString().split('T')[0],
+  end_date: defaultEnd.toISOString().split('T')[0],
+  notes: ''
+});
+
+const submitRent = () => {
+  rentForm.post(route('gadgets.rent.store', props.gadget.id), {
+    preserveScroll: true,
+  });
+};
 
 function rentNow() {
   if (props.showRentForm) {
@@ -150,17 +166,60 @@ function rentNow() {
               Rent Now
             </button>
 
-            <!-- Rent Form Notification -->
             <div
               v-if="showRentForm"
-              class="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-5 mb-8"
+              class="rounded-xl border-2 border-yellow-400 bg-yellow-50 p-6 mb-8 space-y-5"
             >
-              <h3 class="text-lg font-bold text-gray-900 mb-2">
+              <h3 class="text-xl font-bold text-gray-900">
                 Complete your rental request
               </h3>
-              <p class="text-sm text-gray-700">
-                Continue the process to confirm availability and finalize your rental.
-              </p>
+              <form class="space-y-5" @submit.prevent="submitRent">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <label class="flex flex-col text-sm font-semibold text-gray-700">
+                    Start Date
+                    <input
+                      type="date"
+                      v-model="rentForm.start_date"
+                      class="mt-2 rounded-lg border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
+                    />
+                    <span v-if="rentForm.errors.start_date" class="text-xs text-red-500 mt-1">
+                      {{ rentForm.errors.start_date }}
+                    </span>
+                  </label>
+                  <label class="flex flex-col text-sm font-semibold text-gray-700">
+                    End Date
+                    <input
+                      type="date"
+                      v-model="rentForm.end_date"
+                      class="mt-2 rounded-lg border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
+                    />
+                    <span v-if="rentForm.errors.end_date" class="text-xs text-red-500 mt-1">
+                      {{ rentForm.errors.end_date }}
+                    </span>
+                  </label>
+                </div>
+
+                <label class="flex flex-col text-sm font-semibold text-gray-700">
+                  Notes to rentor (optional)
+                  <textarea
+                    rows="3"
+                    v-model="rentForm.notes"
+                    class="mt-2 rounded-lg border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
+                    placeholder="Share pickup details or special requests"
+                  />
+                  <span v-if="rentForm.errors.notes" class="text-xs text-red-500 mt-1">
+                    {{ rentForm.errors.notes }}
+                  </span>
+                </label>
+
+                <button
+                  type="submit"
+                  class="w-full bg-yellow-400 text-gray-900 font-semibold py-3 rounded-lg hover:bg-yellow-500 transition"
+                  :disabled="rentForm.processing"
+                >
+                  {{ rentForm.processing ? 'Submitting...' : 'Submit Rental Request' }}
+                </button>
+              </form>
             </div>
 
             <!-- Included Accessories -->

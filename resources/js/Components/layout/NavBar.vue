@@ -66,7 +66,7 @@ import { Inertia } from '@inertiajs/inertia';
 const navLinks = [
   { name: 'Home', href: route('home') },
   { name: 'Gadgets', href: route('gadgets.list') },
-  { name: 'Rents', href: '#details' },
+  { name: 'Rents', href: route('rents.index') },
   { name: 'About Us', href: '#about' },
   { name: 'Contact Us', href: '#contact' }
 ];

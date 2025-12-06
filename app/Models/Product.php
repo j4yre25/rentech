@@ -21,4 +21,14 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function rentor()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function rents()
+    {
+        return $this->hasMany(Rent::class);
+    }
 }

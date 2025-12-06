@@ -61,7 +61,8 @@ const mappedProducts = computed(() => filteredProducts.value.map(product => {
     categoryLabel: product.category ?? product.category_name ?? '',
     price_per_day: product.price_per_day ?? product.price ?? product.daily_rate ?? 0,
     features: rawFeatures.slice(0, 4),
-    detailsUrl: product.detailsUrl ?? route('gadgets.show', product.slug ?? product.id)
+    detailsUrl: product.detailsUrl ?? route('gadgets.show', product.slug ?? product.id),
+    rentUrl: product.rentUrl ?? route('gadgets.rent', product.slug ?? product.id)
   };
 }));
 
