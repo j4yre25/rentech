@@ -5,18 +5,15 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ViewProductController;
 use App\Models\Rentee;
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
-// Public product details page (Inertia -> ViewDetailsGadget)
-Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadgets.show');
 
 
-// Public product details page (Inertia -> ViewDetailsGadget)
-Route::get('/gadgets/{product}', [ProductController::class, 'view'])->name('gadgets.show');
 
 Route::get('/register/rentee', function () {
     return Inertia::render('Auth/RegisterRentee');
@@ -25,10 +22,10 @@ Route::get('/register/rentee', function () {
 Route::post('/register/rentee', [
     App\Http\Controllers\RenteeRegistrationController::class,
     'store'
-])->name('register.rentee');
+    ])->name('register.rentee');
 
-
-Route::get('/register/rentor', function () {
+    
+    Route::get('/register/rentor', function () {
     return Inertia::render('Auth/RegisterRentor');
 })->name('register.rentor');
 
@@ -49,7 +46,12 @@ Route::middleware([
 
     // Rentor Registration
 
+//Rentee Routes
+Route::get('/gadgets', [ViewProductController::class, 'list'])->name('gadgets.list');
+Route::get('/gadgets/{product}', [ViewProductController::class, 'show'])->name('gadgets.show');
+Route::get('/gadgets/{product}/rent', [ViewProductController::class, 'rent'])->name('gadgets.rent');
 
+//End of Rentee Routes
 
 
 
