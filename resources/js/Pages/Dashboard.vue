@@ -55,7 +55,7 @@ const handleSearch = () => {
     </div>
 
 
-    <div v-if="userRole == 'renter'">
+    <div v-if="userRole == 'rentee'">
         <NavBar />
         <LandingAppLayout>
             <!-- Hero Section -->
