@@ -11,6 +11,8 @@ class RoleMiddleware
 {
     public function handle($request, Closure $next, $role, $guard = null)
     {
+        dd($role);
+
         $authGuard = Auth::guard($guard);
 
         $user = $authGuard->user();
@@ -50,7 +52,7 @@ class RoleMiddleware
 
         $args = is_null($guard) ? $roleString : "$roleString,$guard";
 
-        return static::class.':'.$args;
+        return static::class . ':' . $args;
     }
 
     /**
@@ -66,7 +68,7 @@ class RoleMiddleware
         }
 
         if (is_array($role)) {
-            $role = array_map(fn ($r) => $r instanceof \BackedEnum ? $r->value : $r, $role);
+            $role = array_map(fn($r) => $r instanceof \BackedEnum ? $r->value : $r, $role);
 
             return implode('|', $role);
         }
