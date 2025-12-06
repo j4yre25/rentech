@@ -25,11 +25,7 @@ Route::post('/register/rentee', [
     App\Http\Controllers\RenteeRegistrationController::class,
     'store'
 ])->name('register.rentee');
-Route::get('/email/confirm', function () {
-    return Inertia::render('Auth/VerifyEmail', [
-        'email' => request('email'),
-    ]);
-})->name('email.confirm.show');
+
 
 Route::get('/register/rentor', function () {
     return Inertia::render('Auth/RegisterRentor');
@@ -83,7 +79,7 @@ Route::get('/test', function () {
 });
 
 Route::get('/email/confirm', function () {
-    return Inertia::render('Auth/ConfirmEmail', [
+    return Inertia::render('Auth/VerifyEmail', [
         'email' => request('email'),
     ]);
 })->name('email.confirm.show');
